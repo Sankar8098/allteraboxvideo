@@ -58,6 +58,13 @@ async def start_command(client, message):
     reply_markup = InlineKeyboardMarkup([[join_button, developer_button]])
     await message.reply_text(reply_message, reply_markup=reply_markup)
 
+async def is_user_member(client, user_id):
+    try:
+        member = await client.get_chat_member(fsub_id, user_id)
+        logging.info(f"User {user_id} membership status: {member.status}")
+        if member.status in [ChatMemberStatus.MEMBER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
+            return True
+        
 terabox_link = message.text.strip()
     if "terabox" not in terabox_link:
         await message.reply_text("ᴘʟᴇᴀsᴇ sᴇɴᴅ ᴀ ᴠᴀʟɪᴅ ᴛᴇʀᴀʙᴏx ʟɪɴᴋ.")
